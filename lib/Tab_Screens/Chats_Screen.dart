@@ -10,7 +10,13 @@ class Chats_Screen extends StatefulWidget {
 class _Chats_ScreenState extends State<Chats_Screen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return
+
+
+
+
+
+      const Scaffold(
       body: Center(
 
         child: Column(

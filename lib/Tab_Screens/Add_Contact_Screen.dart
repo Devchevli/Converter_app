@@ -22,7 +22,7 @@ class _Add_ContactState extends State<Add_Contact> {
             ),
             CircleAvatar(
               radius: size.height / 15,
-              child: Icon(
+              child: const Icon(
                 Icons.add_a_photo_rounded,
               ),
             ),
@@ -47,7 +47,7 @@ class _Add_ContactState extends State<Add_Contact> {
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.phone),
                       border: OutlineInputBorder(),
-                      hintText: 'Full name',
+                      hintText: 'chat conversation',
                     ),
                   ),
                 ),
@@ -65,32 +65,39 @@ class _Add_ContactState extends State<Add_Contact> {
             ),
             Column(
               children: [
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        showDatePicker(
-                            context: context,
-                            firstDate: DateTime(DateTime.january),
-                            lastDate: DateTime(DateTime.december));
-                      },
-                      icon: Icon(Icons.calendar_month),
-                    ),
-                    Text("Date Picker")
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Row(
+
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          showDatePicker(
+                              context: context,
+                              firstDate: DateTime(DateTime.january),
+                              lastDate: DateTime(DateTime.december));
+                        },
+                        icon: const Icon(Icons.calendar_month),
+                      ),
+                      const Text("Date Picker")
+                    ],
+                  ),
                 ),
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay(hour: 24, minute: 60));
-                      },
-                      icon: Icon(Icons.alarm),
-                    ),
-                    const Text("Time Picker")
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          showTimePicker(
+                              context: context,
+                              initialTime: const TimeOfDay(hour: 24, minute: 60));
+                        },
+                        icon: const Icon(Icons.alarm),
+                      ),
+                      const Text("Time Picker")
+                    ],
+                  ),
                 ),
               ],
             ),
