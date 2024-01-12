@@ -18,7 +18,7 @@ class _Home_ScreenState extends State<Home_Screen> {
   Widget build(BuildContext context) {
         List<Widget> screens = [
       const Add_Contact(),
-      const Chats_Screen(),
+       chatScreen(),
       const Call_Screen(),
       const SettingScreen(),
     ];

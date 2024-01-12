@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'Home_Screen.dart';
+import 'just_try/shared_preference.dart';
 
 void main() => runApp(
       DevicePreview(

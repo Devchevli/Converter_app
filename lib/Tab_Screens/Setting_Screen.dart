@@ -98,21 +98,19 @@ class SettingScreen extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
+                            const Padding(
+                              padding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 4),
-                              child: Container(
-                                child: const TextField(
-                                  decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Colors.transparent)),
-                                    focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Colors.transparent)),
-                                    border: OutlineInputBorder(),
-                                    hintText: 'Enter your Bio..',
-                                  ),
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.transparent)),
+                                  focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.transparent)),
+                                  border: OutlineInputBorder(),
+                                  hintText: 'Enter your Bio..',
                                 ),
                               ),
                             ),
@@ -149,7 +147,7 @@ class SettingScreen extends StatelessWidget {
                 color: Colors.transparent,
                 child: Row(
                   children: [
-                    Icon(Icons.sunny, color: Colors.grey, size: 30),
+                    const Icon(Icons.sunny, color: Colors.grey, size: 30),
                     SizedBox(
                       width: size.height / 35,
                     ),

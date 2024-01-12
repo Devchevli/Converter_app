@@ -2,41 +2,37 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class chatScreen extends StatefulWidget {
+class SecondPage extends StatefulWidget {
   @override
-  _chatScreenState createState() => _chatScreenState();
+  _SecondPageState createState() => _SecondPageState();
 }
 
-class _chatScreenState extends State<chatScreen> {
+class _SecondPageState extends State<SecondPage> {
   String name = "";
-  String call = "";
-  String chat = "";
 
   @override
   void initState() {
     super.initState();
-    loadName();
+    _loadName();
   }
 
-  Future<void> loadName() async {
+  Future<void> _loadName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     name = prefs.getString('name') ?? 'default_name';
-    call = prefs.getString('call') ?? 'default_name';
-    chat = prefs.getString('chat') ?? 'default_name';
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      appBar: AppBar(
+        title: Text('Second Page'),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text('Name: $name'),
-            Text('Name: $call'),
-            Text('Name: $chat'),
           ],
         ),
       ),
