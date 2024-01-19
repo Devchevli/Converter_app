@@ -1,10 +1,11 @@
-import 'package:conveter_app/Tab_Screens/Call_Screen.dart';
-import 'package:conveter_app/Tab_Screens/Chats_Screen.dart';
-import 'package:conveter_app/Tab_Screens/Setting_Screen.dart';
-import 'package:conveter_app/provider/switch_provider.dart';
+
+import 'package:conveter_app/androidPlatform/androidScreen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'Tab_Screens/Add_Contact_Screen.dart';
+
+import 'androidPlatform/provider/switch_provider.dart';
+import 'iosPlatfrorm/iosScreen.dart';
 
 class Home_Screen extends StatefulWidget {
   const Home_Screen({super.key});
@@ -16,12 +17,7 @@ class Home_Screen extends StatefulWidget {
 class _Home_ScreenState extends State<Home_Screen> {
   @override
   Widget build(BuildContext context) {
-        List<Widget> screens = [
-      const Add_Contact(),
-       chatScreen(),
-      const Call_Screen(),
-      const SettingScreen(),
-    ];
+
         final platformChange = Provider.of<switchProvider>(context, listen: false);
     return DefaultTabController(
       length: 4,
@@ -30,34 +26,25 @@ class _Home_ScreenState extends State<Home_Screen> {
           title:  Text("Platform Conveter"),
           actions: [
             Consumer<switchProvider>(
-              builder: (context, value, child) {
+              builder: (context, platformChange, child) {
                 return Switch(
                     value: platformChange.isactive,
                     onChanged: (value) {
                       platformChange.setActive();
                     });
               },
-            )
+            ),
           ],
-          bottom:   const TabBar(
-
-            tabs: [
-              Tab(
-                icon: Icon(Icons.person),
-              ),
-              Tab(
-                text: "CHATS",
-              ),
-              Tab(
-                text: "CALL",
-              ),
-              Tab(
-                text: "SETTING",
-              ),
-            ],
-          ),
         ),
-        body:  TabBarView(children: screens),
+        body:   Consumer<switchProvider>(
+          builder: (context, platformChange, child) {
+            return platformChange.isActive ? iosScreen() : androidScreen();
+          },
+        ),
+
+
+
+
 
       ),
     );

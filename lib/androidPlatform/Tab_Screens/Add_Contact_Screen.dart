@@ -1,10 +1,11 @@
 import 'dart:io';
-import 'package:conveter_app/Tab_Screens/Chats_Screen.dart';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../just_try/ohter_page.dart';
+
 
 class Add_Contact extends StatefulWidget {
   const Add_Contact({super.key});
@@ -14,10 +15,23 @@ class Add_Contact extends StatefulWidget {
 }
 
 class _Add_ContactState extends State<Add_Contact> {
-  File? pickImage;
   XFile? image;
+  final picker = ImagePicker();
 
-  final ImagePicker picker = ImagePicker();
+  void takePhoto() async {
+    try {
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        setState(() {
+          image = pickedFile;
+        });
+        print("image path: ${image!.path}");
+      }
+    } catch (e) {
+      print("Error picking image: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -29,10 +43,8 @@ class _Add_ContactState extends State<Add_Contact> {
     Future<void> loadName() async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String name = prefs.getString('name') ?? 'default_name';
-      String call = prefs.getString('name') ?? 'default_name';
       String chat = prefs.getString('name') ?? 'default_name';
       _nameController.text = name;
-      _callController.text = call;
       _chatController.text = chat;
     }
 
@@ -42,49 +54,68 @@ class _Add_ContactState extends State<Add_Contact> {
       loadName();
     }
 
-
     Future<void> _saveAndNavigate() async {
       String name = _nameController.text;
-      String call = _callController.text;
       String chat = _chatController.text;
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('name', name);
-      prefs.setString('call', call);
       prefs.setString('chat', chat);
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => chatScreen()),
-      );
     }
 
-    final ImagePicker picker = ImagePicker();
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Center(
-        child: ListView(
+      body: SingleChildScrollView(
+        child: Column(
           // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             SizedBox(
-
               height: size.height / 80,
             ),
-            CircleAvatar(
-
-
-              radius: size.height / 15,
-              child: const Icon(
-                Icons.add_a_photo_rounded,
-              ),
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+        
+                Container(
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.black,
+                    border: Border.all(color: Colors.black)
+                  ),
+                  child: image != null
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image.file(
+                            File(image!.path),
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : ClipRRect(
+                    borderRadius: BorderRadius.circular(100),
+                        child: Image.asset(
+                            "assets/person.jpg",
+                            fit: BoxFit.cover,
+                          ),
+                      ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  right: -15,
+                  child: IconButton(
+                    onPressed: takePhoto,
+                    icon: Icon(CupertinoIcons.add_circled_solid,color: Colors.black,size: 30,),
+                  ),
+                ),
+              ],
             ),
             SizedBox(
               height: size.height / 100,
             ),
-             Column(
+            Column(
               children: [
-                 Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                   child: TextField(
                     controller: _nameController,
@@ -95,11 +126,11 @@ class _Add_ContactState extends State<Add_Contact> {
                     ),
                   ),
                 ),
-                 Padding(
+                const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: TextField(
-                    controller: _callController,
-                    decoration: const InputDecoration(
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(
                       prefixIcon: Icon(Icons.phone),
                       border: OutlineInputBorder(),
                       hintText: 'call conversation',
@@ -124,7 +155,6 @@ class _Add_ContactState extends State<Add_Contact> {
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Row(
-
                     children: [
                       IconButton(
                         onPressed: () {
@@ -147,7 +177,8 @@ class _Add_ContactState extends State<Add_Contact> {
                         onPressed: () {
                           showTimePicker(
                               context: context,
-                              initialTime: const TimeOfDay(hour: 24, minute: 60));
+                              initialTime:
+                                  const TimeOfDay(hour: 24, minute: 60));
                         },
                         icon: const Icon(Icons.alarm),
                       ),
@@ -159,7 +190,7 @@ class _Add_ContactState extends State<Add_Contact> {
                   onPressed: () {
                     _saveAndNavigate();
                   },
-                  child: Text('Save & Navigate'),
+                  child: const Text('Save'),
                 ),
               ],
             ),
@@ -167,7 +198,5 @@ class _Add_ContactState extends State<Add_Contact> {
         ),
       ),
     );
-
   }
-
 }

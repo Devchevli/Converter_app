@@ -1,26 +1,69 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:image_picker/image_picker.dart';
 
-class SecondPage extends StatefulWidget {
-  @override
-  _SecondPageState createState() => _SecondPageState();
+void main() {
+  runApp(MyApp());
 }
 
-class _SecondPageState extends State<SecondPage> {
-  String name = "";
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Save Image and Navigate'),
+        ),
+        body: ImageSaveAndNavigate(),
+      ),
+    );
+  }
+}
+class ImageSaveAndNavigate extends StatefulWidget {
+  @override
+  _ImageSaveAndNavigateState createState() => _ImageSaveAndNavigateState();
+}
+
+class _ImageSaveAndNavigateState extends State<ImageSaveAndNavigate> {
+  File? _image;
+  final picker = ImagePicker();
+
+  Future<void> _takePhoto() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
 
   @override
-  void initState() {
-    super.initState();
-    _loadName();
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        if (_image != null) Image.file(_image!),
+        ElevatedButton(
+          onPressed: _takePhoto,
+          child: Text('Take a photo'),
+        ),
+        if (_image != null) ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SecondPage(image: _image!)),
+            );
+          },
+          child: Text('Go to Next Page'),
+        ),
+      ],
+    );
   }
+}
 
-  Future<void> _loadName() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    name = prefs.getString('name') ?? 'default_name';
-    setState(() {});
-  }
+class SecondPage extends StatelessWidget {
+  final File image;
+
+  SecondPage({required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +74,10 @@ class _SecondPageState extends State<SecondPage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('Name: $name'),
+          children: [
+            Text('This is the second page'),
+            SizedBox(height: 20),
+            Image.file(image),
           ],
         ),
       ),
