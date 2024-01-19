@@ -28,9 +28,9 @@ class _Home_ScreenState extends State<Home_Screen> {
             Consumer<switchProvider>(
               builder: (context, platformChange, child) {
                 return Switch(
-                    value: platformChange.isactive,
+                    value: platformChange.isplatformChange,
                     onChanged: (value) {
-                      platformChange.setActive();
+                      platformChange.setplatform();
                     });
               },
             ),
@@ -38,14 +38,9 @@ class _Home_ScreenState extends State<Home_Screen> {
         ),
         body:   Consumer<switchProvider>(
           builder: (context, platformChange, child) {
-            return platformChange.isActive ? iosScreen() : androidScreen();
+            return platformChange.isplatformChange ? iosScreen() : androidScreen();
           },
         ),
-
-
-
-
-
       ),
     );
   }

@@ -50,9 +50,9 @@ class SettingScreen extends StatelessWidget {
                     Consumer<switchProvider>(
                       builder: (BuildContext context, value, Widget? child) {
                         return Switch(
-                            value: change.isActive,
+                            value: change.isprofile,
                             onChanged: (value) {
-                              change.setIsActive();
+                              change.setprofile();
                             });
                       },
                     ),
@@ -62,7 +62,7 @@ class SettingScreen extends StatelessWidget {
               Consumer<switchProvider>(
                 builder: (context, value, child) {
                   return Visibility(
-                    visible: change.isActive,
+                    visible: change.isprofile,
                     child: ListView(
                       shrinkWrap: true,
                       // crossAxisAlignment: CrossAxisAlignment.center,

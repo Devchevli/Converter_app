@@ -3,21 +3,21 @@
 import 'package:flutter/foundation.dart';
 
 class switchProvider with ChangeNotifier{
-  bool _isActive = false;
-  bool _isactive = false;
+  bool _isplatformConvert = false;
+  bool _isprofile = false;
   bool _isThemeChange = false;
 
-  bool get isActive => _isActive;
-  bool get isactive => _isactive;
+  bool get isplatformChange => _isplatformConvert;
+  bool get isprofile => _isprofile;
   bool get isThemeChange => _isThemeChange;
 
-  void setIsActive (){
-    _isActive = !_isActive;
+  void setplatform (){
+    _isplatformConvert = !_isplatformConvert;
     notifyListeners();
   }
 
-  void setActive (){
-    _isactive = !_isactive;
+  void setprofile (){
+    _isprofile = !_isprofile;
     notifyListeners();
   }
   void setThemeChange (){

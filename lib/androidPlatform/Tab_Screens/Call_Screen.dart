@@ -27,7 +27,7 @@ class _callScreenState extends State<callScreen> {
   }
 
   call({required String contactNumber}) async {
-    Uri url = Uri(scheme: "tell", path: '7016711700');
+    Uri url = Uri(scheme: "tel", path: '7016711700');
     await launchUrl(url);
   }
 
@@ -71,10 +71,10 @@ class _callScreenState extends State<callScreen> {
                       color: CupertinoColors.activeGreen,
                       onPressed: () async {
                         call(contactNumber: "7016711700");
-                        Uri uri = Uri.parse("7016711700");
-                        if (await canLaunchUrl(uri)) {
-                          await launchUrl(uri);
-                        }
+                        // Uri uri = Uri.parse("7016711700");
+                        // if (await canLaunchUrl(uri)) {
+                        //   await launchUrl(uri);
+                        // }
                       },
                       icon: Icon(Icons.call),
                     ),

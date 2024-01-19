@@ -7,14 +7,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 
-class Add_Contact extends StatefulWidget {
-  const Add_Contact({super.key});
+class addContact_ioScreen extends StatefulWidget {
+  const addContact_ioScreen({super.key});
 
   @override
-  State<Add_Contact> createState() => _Add_ContactState();
+  State<addContact_ioScreen> createState() => _addContact_ioScreenState();
 }
 
-class _Add_ContactState extends State<Add_Contact> {
+class _addContact_ioScreenState extends State<addContact_ioScreen> {
   XFile? image;
   final picker = ImagePicker();
 
@@ -68,30 +68,30 @@ class _Add_ContactState extends State<Add_Contact> {
             Stack(
               clipBehavior: Clip.none,
               children: [
-        
+
                 Container(
                   height: 100,
                   width: 100,
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.black,
-                    border: Border.all(color: Colors.black)
+                      shape: BoxShape.circle,
+                      color: Colors.black,
+                      border: Border.all(color: Colors.black)
                   ),
                   child: image != null
                       ? ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Image.file(
-                            File(image!.path),
-                            fit: BoxFit.cover,
-                          ),
-                        )
+                    borderRadius: BorderRadius.circular(100),
+                    child: Image.file(
+                      File(image!.path),
+                      fit: BoxFit.cover,
+                    ),
+                  )
                       : ClipRRect(
                     borderRadius: BorderRadius.circular(100),
-                        child: Image.asset(
-                            "assets/person.jpg",
-                            fit: BoxFit.cover,
-                          ),
-                      ),
+                    child: Image.asset(
+                      "assets/person.jpg",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
                 Positioned(
                   bottom: 0,
@@ -171,7 +171,7 @@ class _Add_ContactState extends State<Add_Contact> {
                           showTimePicker(
                               context: context,
                               initialTime:
-                                  const TimeOfDay(hour: 24, minute: 60));
+                              const TimeOfDay(hour: 24, minute: 60));
                         },
                         icon: const Icon(Icons.alarm),
                       ),
@@ -193,3 +193,4 @@ class _Add_ContactState extends State<Add_Contact> {
     );
   }
 }
+
